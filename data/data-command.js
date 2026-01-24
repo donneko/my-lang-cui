@@ -27,7 +27,7 @@ function commandIfNot(){
     return {
         type:COMMAND_TYPE.ERROR,
         help:"エラーが発生:このコマンドは存在しません。コマンドをご確認ください。",
-        fn:(INPUT_COMMAND_DATA)=>{return `${INPUT_COMMAND_DATA.raw} :このコマンドは存在しません。コマンドをご確認ください。`},
+        fn:(INPUT_COMMAND_DATA)=>{return `コマンドは存在しません。コマンドをご確認ください。: ${INPUT_COMMAND_DATA.raw}`},
     };
 }
 

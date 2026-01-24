@@ -5,7 +5,7 @@ export function bootNodeJs(){
     const CUI = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
-        prompt: ">?",
+        prompt: ">?: ",
     });
 
     return {
