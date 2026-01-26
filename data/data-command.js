@@ -1,26 +1,17 @@
 import {COMMAND_TYPE} from"../data/data-command-type.js";
 
+
+import {help} from"../command/help.js";
+import {print} from"../command/print.js";
+import {start} from"../command/start.js";
+import {close} from"../command/close.js";
+
+
 const COMMANDS = Object.freeze({
-    "help":{
-        type:COMMAND_TYPE.COMMAND,
-        help:"すべてのコマンドのヘルプが表示されます",
-        fn:(INPUT_COMMAND_DATA)=>{return `helpが実行されました。ユーザー入力 >: ${INPUT_COMMAND_DATA.raw}`},
-    },
-    "print":{
-        type:COMMAND_TYPE.COMMAND,
-        help:"入力された引数を画面に出力します",
-        fn:(INPUT_COMMAND_DATA)=>{return `${INPUT_COMMAND_DATA.args}`},
-    },
-    "start":{
-        type:COMMAND_TYPE.MESSAGE,
-        help:"最初のシステムからのメッセージを表示します",
-        fn:(INPUT_COMMAND_DATA)=>{return `こんにちは〜〜 現在このCUIは作成中です。安定しないときがあります。`},
-    },
-    "close":{
-        type:COMMAND_TYPE.CLOSE,
-        help:"システムを出力します",
-        fn:(INPUT_COMMAND_DATA)=>{return `さようなら～`},
-    },
+    "help":help(),
+    "print":print(),
+    "start":start(),
+    "close":close(),
 });
 
 function commandIfNot(){
@@ -37,4 +28,7 @@ export function commandGetter(GET_COMMAND_NAME){
     }
 
     return COMMANDS[GET_COMMAND_NAME];
+}
+export function commandNamesGetter(){
+    return Object.keys(COMMANDS);
 }

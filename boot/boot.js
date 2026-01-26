@@ -3,7 +3,7 @@ import {App} from "../app/app.js";
 
 
 function getSystemType(){
-    if(process.versions?.node){
+    if(process?.versions?.node){
         return "node";
     }else{
         return "web";

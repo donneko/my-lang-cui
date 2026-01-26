@@ -9,7 +9,8 @@ export function bootNodeJs(){
     });
 
     return {
-        CLI_INPUT:CUI, //コマンドラインインターフェイス_インプット
-        CLI_OUTPUT:(e)=>console.log(e), //コマンドラインインターフェイス_インプット
+        CLI_INPUT:CUI,
+        CLI_OUTPUT:(e)=>console.log(e),
+        CLI_END:()=>process.exit(0),
     }
 }

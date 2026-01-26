@@ -6,7 +6,8 @@ export class App{
         this.BOOT_DATA  = bootData;
         this.CLI_INPUT  = this.BOOT_DATA.CLI_INPUT;
         this.CLI_OUTPUT = this.BOOT_DATA.CLI_OUTPUT;
-        
+        this.CLI_END    = this.BOOT_DATA.CLI_END;
+
         this.#initCui();
         this.#initEvent();
     }
@@ -37,7 +38,7 @@ export class App{
         this.CLI_OUTPUT(RETURN);
 
         if(COMMAND_DATA.type === COMMAND_TYPE.CLOSE){
-            this.CLI_INPUT.close();
+            this.CLI_END()
         }else{
             this.CLI_INPUT.prompt();
         }
