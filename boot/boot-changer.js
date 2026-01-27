@@ -5,11 +5,9 @@ export function bootChanger(type){
     switch(type){
         case "node":
             return bootNodeJs();
-        break;
         case "web":
             return bootWebJs();
-        break;
         default:
-            throw new Error("boot type が設定されていません");
+            throw new Error(`boot type が不適切です: ${type}`);
     }
 }

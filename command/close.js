@@ -1,9 +1,7 @@
-    
-export function close(INPUT_COMMAND_DATA){
-    return {
-        key:"close", //確認用
-        type:"CLOSE",
-        help:"システムを出力します",
-        fn:(INPUT_COMMAND_DATA)=>{return `さようなら～`},
-    }
-}
+import {COMMAND_TYPE} from"../data/data-command-type.js";
+export const close = Object.freeze({
+    key:["close","end","exit","quit"],
+    type:[COMMAND_TYPE.CLOSE,COMMAND_TYPE.NODE_JS,COMMAND_TYPE.WEB_JS],
+    help:"CUIを終了します",
+    fn:(INPUT_COMMAND_DATA)=>{return `さようなら～`},
+});

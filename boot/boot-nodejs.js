@@ -11,6 +11,9 @@ export function bootNodeJs(){
     return {
         CLI_INPUT:CUI,
         CLI_OUTPUT:(e)=>console.log(e),
-        CLI_END:()=>process.exit(0),
+        CLI:{
+            ProcessExit:(n)=>process.exit(n),
+            ReadlineClose:()=>readline.close(),
+        },
     }
 }

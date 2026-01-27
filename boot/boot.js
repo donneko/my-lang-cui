@@ -2,21 +2,12 @@ import {bootChanger} from "./boot-changer.js";
 import {App} from "../app/app.js";
 
 
-function getSystemType(){
-    if(process?.versions?.node){
-        return "node";
-    }else{
-        return "web";
-    }
-}
-
-export function boot(){
+export function boot(SYSTEM_TYPE){
     try {
-        const BOOT_DATA = bootChanger( getSystemType() );
+        const BOOT_DATA = bootChanger(SYSTEM_TYPE);
 
         new App(BOOT_DATA);
     } catch (error) {
         console.error(error);
     } 
 }
-// 後でJsDocを追加;

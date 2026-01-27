@@ -6,7 +6,7 @@ export class App{
         this.BOOT_DATA  = bootData;
         this.CLI_INPUT  = this.BOOT_DATA.CLI_INPUT;
         this.CLI_OUTPUT = this.BOOT_DATA.CLI_OUTPUT;
-        this.CLI_END    = this.BOOT_DATA.CLI_END;
+        this.CLI        = this.BOOT_DATA.CLI;
 
         this.#initCui();
         this.#initEvent();
@@ -21,7 +21,7 @@ export class App{
         this.CLI_INPUT.on("SIGINT",()             => this.#command("close") );
     }
 
-    #commandChenger(INPUT_COMMAND){
+    #commandChanger(INPUT_COMMAND){
         const COMMAND = String(INPUT_COMMAND);
         const COMMAND_TRIM = COMMAND.trim();
         const COMMAND_SPLIT = COMMAND_TRIM.split(/\s+/);
@@ -31,14 +31,28 @@ export class App{
     }
 
     #command(INPUT_COMMAND){
-        const INPUT_COMMAND_DATA = this.#commandChenger(INPUT_COMMAND)
+        const INPUT_COMMAND_DATA = this.#commandChanger(INPUT_COMMAND)
+        if(INPUT_COMMAND_DATA.cmd.length === 0){
+            this.CLI_INPUT.prompt();
+            return;
+        }
+
         const COMMAND_DATA = commandGetter(INPUT_COMMAND_DATA.cmd);
-        const RETURN       = COMMAND_DATA.fn(INPUT_COMMAND_DATA);
 
-        this.CLI_OUTPUT(RETURN);
+        try {
+            const RETURN       = COMMAND_DATA.fn(INPUT_COMMAND_DATA);
+            this.CLI_OUTPUT(RETURN);
+        } catch (error) {
+            this.CLI_OUTPUT(`====ERROR====\nコマンド実行中にエラーが発生しました。:\n ${String(error?.message ?? e)}\n====END====`);
+        }
+        
+        if(COMMAND_DATA.type.includes(COMMAND_TYPE.CLOSE)){
+            try{
+                this.CLI.ReadlineClose();
+            }finally{
+                this.CLI.ProcessExit(0);
 
-        if(COMMAND_DATA.type === COMMAND_TYPE.CLOSE){
-            this.CLI_END()
+            }
         }else{
             this.CLI_INPUT.prompt();
         }
