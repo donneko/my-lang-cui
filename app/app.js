@@ -1,4 +1,4 @@
-import {commandGetter} from "../data/data-command.js";
+import {commandExecution} from "./command-execution.js";
 import {COMMAND_TYPE} from "../data/data-command-type.js";
 
 export class App{
@@ -37,14 +37,11 @@ export class App{
             return;
         }
 
-        const COMMAND_DATA = commandGetter(INPUT_COMMAND_DATA.cmd);
+        const CMD_EXE = commandExecution(INPUT_COMMAND_DATA);
+        const COMMAND_DATA = CMD_EXE.cmdData;
+        const RETURN = CMD_EXE.return;
 
-        try {
-            const RETURN       = COMMAND_DATA.fn(INPUT_COMMAND_DATA);
-            this.CLI_OUTPUT(RETURN);
-        } catch (error) {
-            this.CLI_OUTPUT(`====ERROR====\nコマンド実行中にエラーが発生しました。:\n ${String(error?.message ?? e)}\n====END====`);
-        }
+        this.CLI_OUTPUT(RETURN)
         
         if(COMMAND_DATA.type.includes(COMMAND_TYPE.CLOSE)){
             try{
