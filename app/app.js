@@ -1,5 +1,7 @@
-import {commandExecution} from "./command-execution.js";
+import {commandExecution} from "../core/command-execution.js";
 import {COMMAND_TYPE} from "../data/data-command-type.js";
+// TODO 安全を上げる
+// TODO command-decoder を呼び出す
 
 export class App{
     constructor(bootData){
@@ -15,10 +17,11 @@ export class App{
     #initCui(){
         this.#command("start");
     }
+    
     #initEvent(){
-        this.CLI_INPUT.on("line"  ,(INPUT_COMMAND)=> this.#command(INPUT_COMMAND) );
-        this.CLI_INPUT.on("close" ,()             => this.#command("close") );
-        this.CLI_INPUT.on("SIGINT",()             => this.#command("close") );
+        this.CLI_INPUT.on("line"  ,async (INPUT_COMMAND)=>{ await this.#command(INPUT_COMMAND);});
+        this.CLI_INPUT.on("close" ,async ()             =>{ await this.#command("close"); });
+        this.CLI_INPUT.on("SIGINT",async ()             =>{ await this.#command("close"); });
     }
 
     #commandChanger(INPUT_COMMAND){
@@ -30,14 +33,14 @@ export class App{
         return { cmd:COMMAND_CMD, args:COMMAND_SPLIT, raw:COMMAND_TRIM }
     }
 
-    #command(INPUT_COMMAND){
+    async #command(INPUT_COMMAND){
         const INPUT_COMMAND_DATA = this.#commandChanger(INPUT_COMMAND)
         if(INPUT_COMMAND_DATA.cmd.length === 0){
             this.CLI_INPUT.prompt();
             return;
         }
 
-        const CMD_EXE = commandExecution(INPUT_COMMAND_DATA);
+        const CMD_EXE = await commandExecution(INPUT_COMMAND_DATA);
         const COMMAND_DATA = CMD_EXE.cmdData;
         const RETURN = CMD_EXE.return;
 
@@ -46,9 +49,9 @@ export class App{
         if(COMMAND_DATA.type.includes(COMMAND_TYPE.CLOSE)){
             try{
                 this.CLI.ReadlineClose();
+                this.CLI_OUTPUT("正常に終了しました。")
             }finally{
                 this.CLI.ProcessExit(0);
-
             }
         }else{
             this.CLI_INPUT.prompt();

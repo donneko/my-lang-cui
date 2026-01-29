@@ -13,7 +13,7 @@ export function bootNodeJs(){
         CLI_OUTPUT:(e)=>console.log(e),
         CLI:{
             ProcessExit:(n)=>process.exit(n),
-            ReadlineClose:()=>readline.close(),
+            ReadlineClose:()=>CUI.close(),
         },
     }
 }

@@ -1,5 +1,5 @@
 import {COMMAND_TYPE} from"../data/data-command-type.js";
-import * as commands from "../command/index.js";
+import * as commands from "./data-command-index.js";
 const COMMAND_MAP = new Map();
 
 function initSetCommand(COMMAND_DATA,COMMAND_KEY){
