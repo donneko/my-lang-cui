@@ -71,8 +71,8 @@ function conversionCommands(cmdList){
 export async function codeDecoder(codeInput){
     const cmds = conversionCommands(getCommandsDecod(codeInput));
     const endLog = [];
-    for(const c of cmds){
-        const result = await commandExecution(c);
+    for(const cmd of cmds){
+        const result = await commandExecution(cmd);
         endLog.push(String(result.return ?? ""));
     }
     return endLog.join("\n");
